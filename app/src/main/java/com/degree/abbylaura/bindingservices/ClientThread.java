@@ -1,11 +1,16 @@
 package com.degree.abbylaura.bindingservices;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
+import static com.degree.abbylaura.bindingservices.ClientHelper.setMessageFromServer;
 
 /**
  * Created by abbylaura on 21/02/2018.
@@ -14,8 +19,7 @@ import java.net.UnknownHostException;
 public class ClientThread extends Thread {
 
     private Socket socket;
-    private String HOST_NAME = "localhost";
-    private int PORT_NUMBER = 9000;
+    private static final String TAG = "ClientThread";
 
     String messageFromServer = null;
     String messageToServer = null;
@@ -23,25 +27,24 @@ public class ClientThread extends Thread {
     BufferedReader inFromServer = null;
     PrintWriter outToServer = null;
 
-    ClientHelper helper;
+    //ClientHelper helper;
 
-    public ClientThread(ClientHelper helper){
+    public ClientThread(String msg) {
         super();
+        this.messageToServer = msg;
 
-        System.out.println("in CH constructor");
-
-        this.helper = helper;
     }
 
 
+
+
+
     public void run(){
-        System.out.println("in CH run");
 
 
          try{
 
-             System.out.println("lets create a CH socket");
-             socket = new Socket(HOST_NAME, PORT_NUMBER);
+             socket = new Socket("10.0.2.2", 9000);
 
              inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
@@ -50,12 +53,45 @@ public class ClientThread extends Thread {
              Boolean communicating = true;
 
 
-             while (communicating) {
-                 messageFromServer = inFromServer.readLine();
-                 helper.setMessageFromServer(messageFromServer);
 
-                 messageToServer = helper.getMessageToServer();
+             while (communicating) {
+
+                 System.out.println("client communicatibg");
+
                  outToServer.println(messageToServer);
+
+
+                 setMessageFromServer(inFromServer.readLine());
+
+
+                 /*
+
+                 response = inFromServer.readLine();
+                 //System.out.println(myresponse + " : " + response);
+                 myresponse = ClientHelper.messageToServer;
+
+                 if(response.equals("FIRST TO CLIENT")){
+                     //outToServer.println(myresponse);
+                     ClientHelper.setMessageFromServer(response);
+
+                 }else if(response.equals("SECOND TO CLIENT")){
+                     //outToServer.println(myresponse);
+                     ClientHelper.setMessageFromServer(response);
+
+                 }else if(response.equals(null)){
+                     ClientHelper.setMessageFromServer("message null");
+
+                 }
+
+                 ClientHelper.setMessageFromServer(response);
+
+                 outToServer.println(myresponse);
+                // outToServer.flush();
+
+                */
+
+
+
 
              }
 

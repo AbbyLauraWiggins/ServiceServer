@@ -4,6 +4,8 @@ package com.degree.abbylaura.bindingservices.Server;
  * Created by abbylaura on 21/02/2018.
  */
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,6 +15,8 @@ import java.net.Socket;
 public class ServerThreads extends Thread{
 
     private Socket clientSocket;
+    private static final String TAG = "ServerThread";
+
 
     public ServerThreads(Socket clientSocket){
         super();
@@ -34,26 +38,20 @@ public class ServerThreads extends Thread{
 
 
             Boolean communicating = true;
-            outToClient.println("Connection accepted");
-            System.out.println("Connection accepted");
 
             String response = null;
-            String previous = null;
+            String myresponse = null;
 
-            int count = 0;
+            outToClient.println("FIRST TO CLIENT");
 
             while(communicating){
 
-                System.out.println("communicating");
 
                 response = inFromClient.readLine();
 
-                if(!response.equals(previous)){ //if message from client is not the same as last
-                    count ++;
-                    outToClient.println(String.valueOf(count));
-                }
+                outToClient.println("Server recieved: " + response);
 
-                previous = response;
+
 
             }
 

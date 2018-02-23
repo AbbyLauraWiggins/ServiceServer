@@ -30,22 +30,27 @@ public class MainActivity extends AppCompatActivity {
         messageToServer = (EditText) findViewById(R.id.message_to_server);
         send = (Button) findViewById(R.id.send_button);
 
+        //messageFromServer.setText(ClientHelper.messageFromServer);
+
 
     }
 
     public void onSendClick(View view) {
 
         if(bound){
-            System.out.println("on click: " + messageToServer);
-
             boundService.setMessageToServer(messageToServer.getText().toString());
-
-            messageFromServer.setText(boundService.getMessageFromServer());
         } else{
             System.out.println("SERVICE NOT BOUND");
         }
 
+    }
 
+    public void onGetClick(View view) {
+        if(bound){
+            messageFromServer.setText(boundService.getMessageFromServer());
+        } else{
+            System.out.println("SERVICE NOT BOUND");
+        }
     }
 
     @Override
@@ -86,4 +91,6 @@ public class MainActivity extends AppCompatActivity {
             bound = false;
         }
     };
+
+
 }

@@ -15,7 +15,10 @@ public class Client {
 
 
     String clientID = null;
-    ClientHelper helper;
+    ClientThread thread;
+
+    String msg;
+    //ClientHelper helper;
 
     public Client(String clientID) {
         super();
@@ -23,24 +26,27 @@ public class Client {
 
         this.clientID = clientID;
 
-        helper = new ClientHelper(clientID);
+        //helper = new ClientHelper(clientID);
 
 
-        new ClientThread(helper).start();
 
     }
+
 
 
     public void setMessageToServer(String message){
-        System.out.println("in client set message");
+        msg = message;
 
-        helper.setMessageToServer(message);
+
+        thread = new ClientThread(msg);
+
+        thread.start();
     }
 
     public String getMessageFromServer(){
-        System.out.println("in client getmessage");
-
-        return helper.getMessageFromServer();
+        //return thread.getMessageFromServer();
+        thread.interrupt();
+        return ClientHelper.messageFromServer;
     }
 
 }

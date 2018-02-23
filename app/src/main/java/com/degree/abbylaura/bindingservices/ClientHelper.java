@@ -6,42 +6,26 @@ package com.degree.abbylaura.bindingservices;
 
 public class ClientHelper {
 
-    String messageFromServer = null;
-    String messageToServer = null;
-    String clientID = null;
+    public static String messageFromServer = null;
+    public static String messageToServer = null;
 
-    public ClientHelper(String clientID){
+
+    public ClientHelper(){
         super();
-
-        this.clientID = clientID;
     }
 
 
 
-    public void setMessageToServer(String message){
-        System.out.println("in client helper set message to server");
-
+    public static void setMessageToServer(String message){
         messageToServer = message;
-    }
-
-    public String getMessageToServer(){
-        System.out.println("in client helper get message to server");
-
-        return messageToServer;
+        //System.out.println("message to server: " + message);
     }
 
 
-
-
-    public String getMessageFromServer(){
-        System.out.println("in client helper getmessage from server");
-
-        return messageFromServer;
-    }
-
-    public void setMessageFromServer(String message){
-        System.out.println("in client helper set message from server");
-
+    public static void setMessageFromServer(String message){
         messageFromServer = message;
+        //System.out.println("message from server: " + message);
     }
+
+
 }

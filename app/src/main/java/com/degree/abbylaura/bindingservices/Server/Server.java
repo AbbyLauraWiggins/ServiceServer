@@ -35,7 +35,7 @@ public class Server {
 
                     //connection accepted
                     clientSocket = serverSocket.accept();
-                    System.out.println("client accepted");
+                    //System.out.println("client accepted");
 
                     //create a new multi-server-thread object to handle new client
                     //pass it the socket returned from the accept and start the thread
